@@ -273,14 +273,20 @@ public class fn {
     }
 
     @NotNull
-    public static String getVersion() {
-        String pck = getPackage();
+    public static String getServerVersion() {
+        String pck = getServerPackage();
         return pck.substring(pck.lastIndexOf('.') + 1);
     }
 
-    public static String getPackage() {
+    public static String getServerPackage() {
         return Bukkit.getServer().getClass().getPackage().getName();
     }
 
+    public static Class getMinecraftClass(String name) throws ClassNotFoundException {
+        return Class.forName("net.minecraft.server."+ getServerVersion() + "." + name);
+    }
 
+    public static Class getBukkitClass(String name) throws ClassNotFoundException {
+        return Class.forName(getServerPackage() + "." + name);
+    }
 }
