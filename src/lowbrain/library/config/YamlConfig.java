@@ -13,6 +13,7 @@ import java.io.File;
 public class YamlConfig extends YamlConfiguration {
     private JavaPlugin plugin;
     private String path;
+    private File file;
 
     public YamlConfig(String path, JavaPlugin plugin) {
         this(path, plugin, true);
@@ -31,16 +32,16 @@ public class YamlConfig extends YamlConfiguration {
             load();
     }
 
-    public FileConfiguration load() {
+    public YamlConfig load() {
         return this.reload();
     }
 
-    public FileConfiguration reload() {
+    public YamlConfig reload() {
         return this.reload(false);
     }
 
-    public FileConfiguration reload(boolean replace) {
-        File file = new File(plugin.getDataFolder(), path);
+    public YamlConfig reload(boolean replace) {
+        this.file = new File(plugin.getDataFolder(), path);
 
         if (!file.exists() && !save(replace))
             return null;
@@ -48,7 +49,7 @@ public class YamlConfig extends YamlConfiguration {
         try {
             this.load(file);
         } catch (Exception e) {
-            plugin.getLogger().warning("Failed to load ressource : " + path);
+            plugin.getLogger().warning("Failed to load resource : " + path);
             return null;
         }
 
@@ -62,15 +63,21 @@ public class YamlConfig extends YamlConfiguration {
     public boolean save(boolean replace) {
         File file = new File(plugin.getDataFolder(), path);
 
-        if (!file.exists() && replace) {
-            try {
+        try {
+            if (!file.exists() || replace) {
                 file.getParentFile().mkdir();
                 plugin.saveResource(path, true);
-            } catch (Exception e) {
+            } else {
+                super.save(this.file);
+            }
+        } catch (Exception e) {
                 plugin.getLogger().warning("Failed to save ressource : " + path);
                 return false;
-            }
         }
         return true;
+    }
+
+    public File getFile() {
+        return file;
     }
 }

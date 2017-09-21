@@ -6,6 +6,8 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -288,5 +290,10 @@ public class fn {
 
     public static Class getBukkitClass(String name) throws ClassNotFoundException {
         return Class.forName(getServerPackage() + "." + name);
+    }
+
+    public final static NumberFormat MONEY_FORMAT = new DecimalFormat("#0.00");
+    public static String toMoney(double value) {
+        return MONEY_FORMAT.format(value);
     }
 }
