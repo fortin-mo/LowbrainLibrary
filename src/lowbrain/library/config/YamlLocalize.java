@@ -1,5 +1,7 @@
 package lowbrain.library.config;
 
+import org.apache.commons.lang.NullArgumentException;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.MessageFormat;
@@ -51,5 +53,19 @@ public class YamlLocalize extends YamlConfig {
      */
     public String format(String path) {
         return this.getString(path, "");
+    }
+
+    public void send(CommandSender to, String path, Object arg) {
+        if (to == null)
+            throw new NullArgumentException("to");
+
+        to.sendMessage(this.format(path, arg));
+    }
+
+    public void send(CommandSender to, String path, Object[] args) {
+        if (to == null)
+            throw new NullArgumentException("to");
+
+        to.sendMessage(this.format(path, args));
     }
 }

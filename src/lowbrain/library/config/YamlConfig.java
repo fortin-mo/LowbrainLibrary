@@ -2,6 +2,7 @@ package lowbrain.library.config;
 
 import lowbrain.library.fn;
 import org.apache.commons.lang.NullArgumentException;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -50,6 +51,7 @@ public class YamlConfig extends YamlConfiguration {
             this.load(file);
         } catch (Exception e) {
             plugin.getLogger().warning("Failed to load resource : " + path);
+            plugin.getLogger().warning("reason : " + e.getMessage());
             return null;
         }
 

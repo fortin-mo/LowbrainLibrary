@@ -115,9 +115,20 @@ public class fn {
      * @param min min value
      * @return random float
      */
-    public static float randomFloat(float min, float max){
-        float range = (max - min);
-        return ((float)Math.random() * range) + min;
+    public static double randomFloat(double min, double max){
+        double range = (max - min);
+        return (Math.random() * range) + min;
+    }
+
+    /**
+     * generate a random double [min,max]
+     * @param max max value
+     * @param min min value
+     * @return random double
+     */
+    public static double randomDouble(double min, double max){
+        double range = (max - min);
+        return (Math.random() * range) + min;
     }
 
     /**
@@ -143,6 +154,17 @@ public class fn {
         }catch (Exception e){
             return d;
         }
+    }
+
+    public static boolean isInt(String s) {
+        boolean is = false;
+        try {
+            Integer.parseInt(s);
+            is = true;
+        } catch (Exception e) {
+            is = false;
+        }
+        return is;
     }
 
     /**
@@ -173,6 +195,14 @@ public class fn {
         }
     }
 
+    public static double toDouble(String s, double d) {
+        try {
+            return Double.parseDouble(s);
+        }catch (Exception e){
+            return d;
+        }
+    }
+
     /***
      * parse string to date (calendar)
      * @param s date as string
@@ -191,7 +221,7 @@ public class fn {
         }
     }
 
-    public static float randomBetween(float min, float max, float value, float range, boolean outBound) {
+    public static double randomBetween(double min, double max, double value, double range, boolean outBound) {
         range = +range;
 
         if (range == 0)
@@ -202,7 +232,7 @@ public class fn {
         if (max < value)
             max = value;
 
-        float random = fn.randomFloat(value - range, value + range);
+        double random = fn.randomDouble(value - range, value + range);
 
         if (outBound)
             return random;
@@ -216,11 +246,11 @@ public class fn {
         return random;
     }
 
-    public static float randomBetween(float min, float max, float value, float range) {
+    public static double randomBetween(double min, double max, double value, float range) {
         return fn.randomBetween(min, max, value, range, false);
     }
 
-    public static float randomBetween(float value, float range) {
+    public static double randomBetween(double value, double range) {
         return randomBetween(value, value, value, range, true);
     }
 
