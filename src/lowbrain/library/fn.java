@@ -2,6 +2,7 @@ package lowbrain.library;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -320,6 +321,37 @@ public class fn {
 
     public static Class getBukkitClass(String name) throws ClassNotFoundException {
         return Class.forName(getServerPackage() + "." + name);
+    }
+
+    @Contract(value = "null, _ -> false; !null, null -> false", pure = true)
+    public static boolean same(ItemStack a, ItemStack b) {
+        if (a == null || b == null)
+            return false;
+
+        if (a.getType() != b.getType())
+            return false;
+
+        if (a.hasItemMeta() != b.hasItemMeta())
+            return false;
+
+        if (a.hasItemMeta()
+                && !fn.StringIsNullOrEmpty(a.getItemMeta().getDisplayName())
+                && b.hasItemMeta()
+                && !fn.StringIsNullOrEmpty(b.getItemMeta().getDisplayName())) {
+
+            return a.getItemMeta().getDisplayName() == b.getItemMeta().getDisplayName();
+        }
+
+        if (a.getMaxStackSize() != b.getMaxStackSize())
+            return false;
+
+        if (a.getType().getMaxDurability() != b.getType().getMaxDurability())
+            return false;
+
+        if (a.getType().getData().getClass() != b.getType().getData().getClass())
+            return false;
+
+        return true;
     }
 
     public final static NumberFormat MONEY_FORMAT = new DecimalFormat("#0.00");
