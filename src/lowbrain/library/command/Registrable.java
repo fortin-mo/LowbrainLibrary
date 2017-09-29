@@ -31,8 +31,8 @@ public interface Registrable {
      * @param cmds list of commands
      * @param executor command handler for all commands
      */
-    default void register(Collection<String> cmds, Command executor) {
-        if (cmds == null || cmds.size() == 0)
+    default void register(Iterable<String> cmds, Command executor) {
+        if (cmds == null)
             return;
 
         if (executor == null)
@@ -46,7 +46,28 @@ public interface Registrable {
 
             getSubs().put(cmd, executor);
         }
+    }
 
+    /**
+     * register mutiples commands with the same execution
+     * @param cmds list of commands
+     * @param executor command handler for all commands
+     */
+    default void register(String[] cmds, Command executor) {
+        if (cmds == null || cmds.length == 0)
+            return;
+
+        if (executor == null)
+            throw new NullArgumentException("executor");
+
+        for (String c : cmds) {
+            String cmd = ignoreCase() ? c.toLowerCase() : c;
+
+            if (getSubs().containsKey(cmd))
+                LowbrainLibrary.getInstance().getLogger().warning("You have registered a same command twice. The first one will be overwriting : " + cmd);
+
+            getSubs().put(cmd, executor);
+        }
     }
 
     /**

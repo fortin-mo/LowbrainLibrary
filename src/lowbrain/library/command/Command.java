@@ -16,6 +16,9 @@ public abstract class Command extends ICommand {
     public final CommandStatus call(CommandSender who, String[] args, String cmd) {
         String sub = null;
 
+        if (!beforeEach(who, args, cmd))
+            return CommandStatus.INVALID;
+
         if (this.onlyPlayer() && !(who instanceof Player)) {
             who.sendMessage("Command only accessible by players !");
             return CommandStatus.VALID;
@@ -36,6 +39,10 @@ public abstract class Command extends ICommand {
         }
 
         return this.execute(who, args, cmd);
+    }
+
+    public boolean beforeEach(CommandSender who, String[] args, String cmd) {
+        return true;
     }
 
     public abstract CommandStatus execute(CommandSender who, String[] args, String cmd);
