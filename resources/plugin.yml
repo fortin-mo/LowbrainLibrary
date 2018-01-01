@@ -1,6 +1,6 @@
 main: lowbrain.library.main.LowbrainLibrary
 name: LowbrainLibrary
-version: 0.0.1
+version: 0.0.1.1
 author: Lowbrain
 description: Library containing multiple utilies for all my plugins
 commands:
