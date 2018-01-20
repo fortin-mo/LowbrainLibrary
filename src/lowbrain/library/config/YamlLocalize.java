@@ -22,9 +22,7 @@ public class YamlLocalize extends YamlConfig {
      * @return formatted string
      */
     public String format(String path, Object[] args) {
-        String str = this.getString(path, "");
-        if (str.isEmpty())
-            return "";
+        String str = this.getString(path, ("error : cannot find String for path -> " + path));
 
         if (args == null)
             args = new Object[0];
@@ -52,7 +50,7 @@ public class YamlLocalize extends YamlConfig {
      * @return string
      */
     public String format(String path) {
-        return this.getString(path, "");
+        return this.getString(path, ("error : cannot find String for path -> " + path));
     }
 
     public void send(CommandSender to, String path, Object arg) {
